@@ -173,7 +173,6 @@ def frequency(num_list, search_term):
 #  ex 11
 
 
-
 '''
 compact([0,1,2,"",[], False, {}, None, "All done"]) # [1,2, "All done"]
 '''
@@ -240,7 +239,6 @@ def contains_purple(*args):
 # ex15
 
 
-
 def combine_words(word, **kwargs):
     if "prefix" in kwargs:
         return kwargs["prefix"] + word
@@ -282,7 +280,6 @@ nums = [90, 1, 35, 67, 89, 20, 3, 1, 2, 3, 4, 5, 6, 9, 34, 46, 57, 68, 79, 12, 2
 
 
 # ex17
-
 
 
 # print(" e " + str(int(2/2)))
@@ -396,4 +393,71 @@ def sum_floats(*args):
     return sum(filter(lambda arg: type(arg) == float, args))
 
 
-print(sum_floats(1.5, 2.4, 'awesome', [], 1))
+# print(sum_floats(1.5, 2.4, 'awesome', [], 1))
+
+
+# ZIP()/"".JOIN!
+# my solution
+# def interleave(s1, s2):
+#     zip_list = list(zip(s1, s2))
+#     new_list2 = ["".join(l) for l in zip_list]
+#     return "".join(new_list2)
+
+
+def interleave(s1, s2):
+    return "".join("".join(l) for l in zip(s1, s2))
+
+
+# print(interleave("hi", "no"))
+
+
+# EX triple_and_filter!
+'''
+triple_and_filter([1,2,3,4]) # [12]
+triple_and_filter([6,8,10,12]) # [24,36]
+'''
+
+
+# my solution1
+# def triple_and_filter(ls):
+#     return list(map(lambda n: n * 3, filter(lambda n: n % 4 == 0, ls)))
+
+# my solution2
+def triple_and_filter(ls):
+    return [n * 3 for n in ls if n % 4 == 0]
+
+
+# course solution
+def triple_and_filter(lst):
+    return list(filter(lambda x: x % 4 == 0, map(lambda x: x * 3, lst)))
+
+
+# print(triple_and_filter([1, 2, 3, 4]))
+
+
+# EX EXTRACT_FULL_NAME!
+'''
+names = [{'first': 'Elie', 'last': 'Schoppik'}, {'first': 'Colt', 'last': 'Steele'}]
+extract_full_name(names) # ['Elie Schoppik', 'Colt Steele']
+'''
+
+
+# my solution
+def extract_full_name(lst):
+    return list(map(lambda i: " ".join((i.get("first"), i.get("last"))), lst))
+
+
+# course solution
+# def extract_full_name(l):
+#     return list(map(lambda val: "{} {}".format(val['first'], val['last']), l))
+
+names = [{'first': 'Elie', 'last': 'Schoppik'}, {'first': 'Colt', 'last': 'Steele'}]
+
+
+# print(extract_full_name(names))
+
+# EX Errors!
+def add(a, b):
+    return a + b
+
+add(1)
