@@ -21,6 +21,9 @@ class Deck:
         # return f"Deck of {self.suit}"
         return "Deck of {} cards".format(self.count())
 
+    def __iter__(self):
+        return iter(self.cards)
+
     def count(self):
         return len(self.cards)
 
@@ -53,3 +56,7 @@ class Deck:
 # hand = d.deal_hand(5)
 # print(hand)
 # print(d.cards)
+my_deck = Deck()
+my_deck.shuffle_deck()
+for card in my_deck:
+    print(card)
