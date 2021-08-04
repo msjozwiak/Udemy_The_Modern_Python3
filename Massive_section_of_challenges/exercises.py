@@ -523,3 +523,255 @@ def is_odd_string(string):
 # print(is_odd_string('amazing'))
 # print(is_odd_string('veryfun'))
 # print(is_odd_string('aaaa'))
+
+
+# EX21
+
+'''
+valid_parentheses("()") # True 
+valid_parentheses(")(()))") # False 
+valid_parentheses("(") # False 
+valid_parentheses("(())((()())())") # True 
+valid_parentheses('))((') # False
+valid_parentheses('())(') # False
+valid_parentheses('()()()()())()(') # False
+'''
+
+
+def valid_parentheses(parens):
+    count = 0
+    i = 0
+    while i < len(parens):
+        if (parens[i] == '('):
+            count += 1
+        if (parens[i] == ')'):
+            count -= 1
+        if (count < 0):
+            return False
+        i += 1
+    return count == 0
+
+
+# print(valid_parentheses(")(()))"))
+
+
+# EX22
+
+'''
+reverse_vowels("Hello!") # "Holle!" 
+reverse_vowels("Tomatoes") # "Temotaos" 
+reverse_vowels("Reverse Vowels In A String") # "RivArsI Vewols en e Streng"
+reverse_vowels("aeiou") # "uoiea"
+reverse_vowels("why try, shy fly?") # "why try, shy fly?"
+'''
+
+
+# First solution
+# def reverse_vowels(string):
+#     vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"]
+#     letters_from_string = list(string)
+#     letters_from_string_reverse = list(string[::-1])
+#     i = 0
+#     j = 0
+#     while i <= len(letters_from_string) - 1:
+#         if letters_from_string[i] in vowels:
+#             while j <= len(letters_from_string_reverse) - 1:
+#                 if letters_from_string_reverse[j] in vowels:
+#                     letters_from_string[i] = letters_from_string_reverse[j]
+#                     j += 1
+#                     break
+#                 j += 1
+#         i += 1
+#     return "".join(letters_from_string)
+
+
+# Second solution
+def reverse_vowels(string):
+    vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"]
+    char_list = list(string)
+    keys_list = []
+    values_list = []
+    for i, char in enumerate(string):
+        if char in vowels:
+            keys_list.append(i)
+            values_list.append(char)
+    keys_list = keys_list[::-1]
+    for i in range(len(keys_list)):
+        char_list[keys_list[i]] = values_list[i]
+    return "".join(char_list)
+
+
+# print(reverse_vowels("Tomatoes"))
+
+
+# EX23
+'''
+three_odd_numbers([1,2,3,4,5]) # True
+three_odd_numbers([0,-2,4,1,9,12,4,1,0]) # True
+three_odd_numbers([5,2,1]) # False
+three_odd_numbers([1,2,3,3,2]) # False
+'''
+
+
+def three_odd_numbers(numbers):
+    for ix, num in enumerate(numbers):
+        if ix + 2 <= len(numbers) - 1:
+            sum_of_numbers = sum([num, numbers[ix + 1], numbers[ix + 2]])
+        if sum_of_numbers % 2 != 0:
+            return True
+    return False
+
+
+# print(three_odd_numbers([1,2,3,3,2]))
+
+
+# EX24
+
+'''
+mode([2,4,1,2,3,3,4,4,5,4,4,6,4,6,7,4]) # 4
+'''
+
+
+# define mode below:
+def mode(numbers):
+    numbers.sort()
+    numbers_frequency = {}
+    count = 1
+    for i, num in enumerate(numbers):
+        if i + 1 <= len(numbers) - 1:
+            if numbers[i + 1] == numbers[i]:
+                count += 1
+            else:
+                numbers_frequency.update({num: count})
+                count = 1
+    numbers_frequency.update({num: count})
+    return max(numbers_frequency, key=numbers_frequency.get)
+
+
+# print(mode([2,4,1,2,3,3,4,4,5,4,4,6,4,6,7,4]))
+# print(mode([4, 4, 4, 4, 5, 5]))
+
+# EX25
+
+'''
+rAvg = running_average()
+rAvg(10) # 10.0
+rAvg(11) # 10.5
+rAvg(12) # 11
+
+rAvg2 = running_average()
+rAvg2(1) # 1
+rAvg2(3) # 2
+'''
+
+
+def running_average():
+    running_average.accumulator = 0
+    running_average.size = 0
+
+    def inner(number):
+        running_average.accumulator += number
+        running_average.size += 1
+        return running_average.accumulator / running_average.size
+
+    return inner
+
+
+# rAvg = running_average()
+# rAvg(10)
+
+
+# EX26
+
+'''
+counter = letter_counter('Amazing')
+counter('a') # 2
+counter('m') # 1
+
+counter2 = letter_counter('This Is Really Fun!')
+counter2('i') # 2
+counter2('t') # 1 
+'''
+
+
+def letter_counter(some_string):
+    list_of_letters = list(some_string.lower())
+    list_of_letters.sort()
+    dic_of_frequency = {char: list_of_letters.count(char) for char in list_of_letters}
+
+    def inner(char):
+        return dic_of_frequency[char]
+
+    return inner
+
+
+# print(letter_counter("Amazing"))
+# counter = letter_counter('Amazing')
+# print(counter("m"))
+
+
+# E27
+
+'''
+def add(a,b):
+    return a+b
+
+oneAddition = once(add)
+
+oneAddition(2,2) # 4
+oneAddition(2,2) # None
+oneAddition(12,200) # None
+'''
+
+
+def add(a, b):
+    return a + b
+
+
+def once(fn):
+    fn.call = False
+
+    def inner(*args):
+        if not fn.call:
+            fn.call = True
+            return fn(*args)
+
+    return inner
+
+
+# def once(fn):
+#     fn.is_called = False
+#
+#     def inner(*args):
+#         if not (fn.is_called):
+#             fn.is_called = True
+#             return fn(*args)
+#
+#     return inner
+
+
+# oneAddition = once(add)
+# print(oneAddition(2, 2))
+# print(oneAddition(4, 2))
+
+
+# E28
+
+'''
+primes = next_prime()
+[next(primes) for i in range(25)]
+# [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+'''
+
+
+def next_prime():
+    num = 2
+    all_primes = set()
+    while True:
+        for prime in all_primes:
+            if num % prime == 0:
+                break
+        else:
+            all_primes.add(num)
+            yield num
+        num += num % 2 + 1
